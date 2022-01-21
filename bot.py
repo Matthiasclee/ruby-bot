@@ -12,7 +12,7 @@ client = discord.Client()
 @client.event
 async def on_ready():
 	print("Bot ready!")
-	await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=str(len(client.guilds)) + " servers"))
+	await client.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name="ruby on " + str(len(client.guilds)) + " servers"))
 
 	for guild in client.guilds:
 		print(guild.name + ": " + str(guild.id))
@@ -62,11 +62,11 @@ async def on_message(message):
 
 @client.event
 async def on_guild_join(guild):
-	await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=str(len(client.guilds)) + " servers"))
+	await client.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name="ruby on " + str(len(client.guilds)) + " servers"))
 
 @client.event
 async def on_guild_remove(guild):
-	await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=str(len(client.guilds)) + " servers"))
+	await client.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name="ruby on " + str(len(client.guilds)) + " servers"))
 
 
 client.run("OTMxMzYwNTUyMzEwMTczNzU2.YeDTGw.EvQUVBsEO9nykyUIID2xMgS5H_Q")
