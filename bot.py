@@ -8,6 +8,8 @@ import subprocess
 
 client = discord.Client()
 
+def reverse(string):
+    return string[::-1]
 
 @client.event
 async def on_ready():
@@ -53,11 +55,21 @@ async def on_message(message):
 
 		if command == "run":
 			toRun = message.content.replace("!rb run", "", 1)
+			toRunNoSpaces = toRun.replace(" ", "")
+			if toRun.startswith("\n"):
+				toRun = toRun.replace("\n", "", 1)
+			if toRunNoSpaces.startswith("```rb"):
+				toRun = toRun.replace("```rb", "", 1)
+			elif toRunNoSpaces.startswith("```"):
+				toRun = toRun.replace("```", "", 1)
+			if toRun.endswith("```"):
+				toRun = reverse(reverse(toRun).replace("```", "", 1))
+
 			result = subprocess.run(['/usr/local/CLIrb/rb', toRun], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 			stdout = result.stdout.decode('utf-8')
 			stderr = result.stderr.decode('utf-8')
 
-			await message.channel.send(stdout.replace('`', '\\`') + "\n\n" + stderr.replace('`', '\\`'))
+			await message.channel.send(stdout.replace('`', '\\`').replace('>', '\\>') + "\n\n" + stderr.replace('`', '\\`').replace('>', '\\>'))
 
 
 @client.event
