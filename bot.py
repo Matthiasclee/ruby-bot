@@ -24,7 +24,7 @@ async def on_message(message):
 	if message.author == client.user:
 		return
 	if message.content.startswith("!rb "):
-		command = shlex.split(message.content.replace("!rb ", "", 1))[0]
+		command = shlex.split(message.content.replace("!rb ", "", 1).replace("\"", "").replace("'", ""))[0]
 		if command == "help":
 			embed=discord.Embed(title="RubyBot", description = "A bot that executes ruby code", color=0xffffff)
 			embed.add_field(name="help", value="Usage: !rb help\nShows this list", inline=False)
