@@ -19,9 +19,6 @@ async def on_ready():
 	for guild in client.guilds:
 		print(guild.name + ": " + str(guild.id))
 
-
-
-
 @client.event
 async def on_message(message):
 	if message.author == client.user:
@@ -31,28 +28,10 @@ async def on_message(message):
 		if command == "help":
 
 			# await message.channel.send("")
-			embed=discord.Embed(title="ML Bot", description = "Invite: https://dsc.gg/mlbot", color=0xffffff)
-			embed.add_field(name="help", value="Usage: -help\nShows this list", inline=False)
-			embed.add_field(name="mute", value="Usage: -mute <user>\nMutes a user (Requires there to be a role named \"Muted\")", inline=False)
-			embed.add_field(name="unmute", value="Usage: -unmute <user>\nUnmutes a user", inline=False)
-			embed.add_field(name="jail", value="Usage: -jail <user>\nPuts a user in jail (Requires there to be a role named \"Jail\")", inline=False)
-			embed.add_field(name="unjail", value="Usage: -unjail <user>\nTakes a user out of jail", inline=False)
-			embed.add_field(name="delete", value="Usage: -delete <message id>\nDeletes a message", inline=False)
-			embed.add_field(name="nick", value="Usage: -nick <user> <nickname>\nChanges the nickname of a user", inline=False)
-			embed.add_field(name="kick", value="Usage: -kick <user>\nKicks a user", inline=False)
-			embed.add_field(name="ban", value="Usage: -ban <user> <reason>\nBans a user", inline=False)
-			embed.add_field(name="unban", value="Usage: -unban <user id>\nUnbans a user", inline=False)
-			embed.add_field(name="addrole", value="Usage: -addrole <user> <role>\nGives a user a role", inline=False)
-			embed.add_field(name="removerole", value="Usage: -removerole <user> <role>\nRemoves a role from a user", inline=False)
-			embed.add_field(name="rr", value="Usage: -rr <description> <emoji> <role>\nMakes a reacction roles message", inline=False)
-			embed.add_field(name="poll", value="Usage: -poll <question> <emoji> <description>\nPosts a poll for users to vote", inline=False)
-			embed.add_field(name="results", value="Usage: -results <message id>\nShows the results of a poll", inline=False)
-			embed.add_field(name="livepoll", value="Usage: -livepoll <question> <emoji> <description>\nPosts a responsive poll for users to vote", inline=False)
-			embed.add_field(name="say", value="Usage: -say <message>\nSays something", inline=False)
-			embed.add_field(name="bwl", value="Usage: -bwl <add | remove> <word>\nManages the bad words list", inline=False)
-			embed.add_field(name="purge", value="Usage: -purge <messages>\nBulk deletes messages", inline=False)
+			embed=discord.Embed(title="RubyBot", description = "A bot that executes ruby code", color=0xffffff)
+			embed.add_field(name="help", value="Usage: !rb help\nShows this list", inline=False)
+			embed.add_field(name="run", value="Usage: !rb run <code>\nRuns code", inline=False)
 			await message.channel.send(embed = embed)
-
 		if command == "run":
 			toRun = message.content.replace("!rb run", "", 1)
 			toRunNoSpaces = toRun.replace(" ", "")
@@ -64,12 +43,12 @@ async def on_message(message):
 				toRun = toRun.replace("```", "", 1)
 			if toRun.endswith("```"):
 				toRun = reverse(reverse(toRun).replace("```", "", 1))
-
 			result = subprocess.run(['/usr/local/CLIrb/rb', toRun], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 			stdout = result.stdout.decode('utf-8')
 			stderr = result.stderr.decode('utf-8')
-
-			await message.channel.send(stdout.replace('`', '\\`').replace('>', '\\>') + "\n\n" + stderr.replace('`', '\\`').replace('>', '\\>'))
+			out = stdout.replace('`', '\\`').replace('>', '\\>') + "\n\n" + stderr.replace('`', '\\`').replace('>', '\\>')
+			embed=discord.Embed(title="RubyBot", description = "```" + out + "```", color=0xffffff)
+			await message.reply(embed=embed, mention_author=False)
 
 
 @client.event
