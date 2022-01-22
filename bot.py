@@ -102,7 +102,7 @@ async def on_raw_reaction_add(ctx):
 				await msg.edit(embed=embed)
 				await msg.remove_reaction(emoji, user)
 
-client.run("OTMxMzYwNTUyMzEwMTczNzU2.YeDTGw.EvQUVBsEO9nykyUIID2xMgS5H_Q")
+client.run(open('token','r').read())
 
 
 
