@@ -49,7 +49,7 @@ async def on_message(message):
 			stdout = result.stdout.decode('utf-8')
 			stderr = result.stderr.decode('utf-8')
 			out = stdout + "\n\n" + stderr
-			embed=discord.Embed(title="Output", description = "```" + out + "```", color=0xffffff)
+			embed=discord.Embed(title="Output", description = "```\n" + out + "\n```", color=0xffffff)
 			await msg.edit(embed=embed)
 			await msg.add_reaction("🔁")
 
@@ -94,7 +94,7 @@ async def on_raw_reaction_add(ctx):
 				stdout = result.stdout.decode('utf-8')
 				stderr = result.stderr.decode('utf-8')
 				out = stdout + "\n\n" + stderr
-				embed=discord.Embed(title="Output", description = "```" + out + "```", color=0xffffff)
+				embed=discord.Embed(title="Output", description = "```\n" + out + "\n```", color=0xffffff)
 				await msg.edit(embed=embed)
 				await msg.remove_reaction(emoji, user)
 
