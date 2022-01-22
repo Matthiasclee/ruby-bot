@@ -41,6 +41,8 @@ async def on_message(message):
 				toRun = toRun.replace("```", "", 1)
 			if toRun.endswith("```"):
 				toRun = reverse(reverse(toRun).replace("```", "", 1))
+			varsdef = "user_name = '" + message.author.name + "'; user_id = '" + str(message.author.id) + "'; user_tag = '" + str(message.author.discriminator) + "';exec_user=user_name;exec_id=user_id;exec_tag=user_tag;"
+			toRun = varsdef + toRun
 			embed=discord.Embed(title="Running...", description = "```Running...```", color=0xffffff)
 			msg = await message.reply(embed=embed, mention_author=False)
 			result = subprocess.run(['/usr/local/CLIrb/rb', toRun], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -86,6 +88,8 @@ async def on_raw_reaction_add(ctx):
 					toRun = toRun.replace("```", "", 1)
 				if toRun.endswith("```"):
 					toRun = reverse(reverse(toRun).replace("```", "", 1))
+				varsdef = "user_name = '" + code_message.author.name + "'; user_id = '" + str(code_message.author.id) + "'; user_tag = '" + str(code_message.author.discriminator) + "';exec_user='" + user.name + "';exec_id='"+str(user.id)+"';exec_tag='" + str(user.discriminator) + "';"
+				toRun = varsdef + toRun
 				result = subprocess.run(['/usr/local/CLIrb/rb', toRun], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 				stdout = result.stdout.decode('utf-8')
 				stderr = result.stderr.decode('utf-8')
