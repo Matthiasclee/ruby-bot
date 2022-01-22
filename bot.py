@@ -44,12 +44,14 @@ async def on_message(message):
 			varsdef = "user_name = '" + message.author.name + "'; user_id = '" + str(message.author.id) + "'; user_tag = '" + str(message.author.discriminator) + "';exec_user=user_name;exec_id=user_id;exec_tag=user_tag;"
 			toRun = varsdef + toRun
 			embed=discord.Embed(title="Running...", description = "```Running...```", color=0xffffff)
+			embed.set_footer(text = "React with 🔁 to rerun")
 			msg = await message.reply(embed=embed, mention_author=False)
 			result = subprocess.run(['/usr/local/CLIrb/rb', toRun], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 			stdout = result.stdout.decode('utf-8')
 			stderr = result.stderr.decode('utf-8')
 			out = stdout + "\n\n" + stderr
 			embed=discord.Embed(title="Output", description = "```\n" + out + "\n```", color=0xffffff)
+			embed.set_footer(text = "React with 🔁 to rerun")
 			await msg.edit(embed=embed)
 			await msg.add_reaction("🔁")
 
@@ -76,6 +78,7 @@ async def on_raw_reaction_add(ctx):
 			msg = await channel.fetch_message(message_id)
 			if msg.author == client.user:
 				embed=discord.Embed(title="Rerunning...", description = "```Rerunnning...```", color=0xffffff)
+				embed.set_footer(text = "React with 🔁 to rerun")
 				await msg.edit(embed=embed)
 				code_message = await channel.fetch_message(str(msg.reference.message_id))
 				toRun = code_message.content.replace("!rb run", "", 1)
@@ -95,6 +98,7 @@ async def on_raw_reaction_add(ctx):
 				stderr = result.stderr.decode('utf-8')
 				out = stdout + "\n\n" + stderr
 				embed=discord.Embed(title="Output", description = "```\n" + out + "\n```", color=0xffffff)
+				embed.set_footer(text = "React with 🔁 to rerun")
 				await msg.edit(embed=embed)
 				await msg.remove_reaction(emoji, user)
 
